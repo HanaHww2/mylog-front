@@ -1,0 +1,114 @@
+.sidebar {
+  width: 17em;
+  background-color: rgb(227, 233, 236);
+  height: 100vh;
+  flex-grow: 0;
+  flex-shrink: 0;
+  transition: box-shadow 300ms ease-in 0s;
+  z-index: 90;
+}
+.sidebar.hidden {
+  width: 0;
+}
+.sidebar.hidden .top,
+.sidebar.hidden .sidebar-menu {
+  opacity: 0;
+  transform: translateX(-17em) translateZ(0px);
+}
+.sidebar.show .top,
+.sidebar.show .sidebar-menu {
+  opacity: 1;
+  transform: translateX(0em) translateZ(99);
+}
+.sidebar .top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8em 0.5em;
+}
+.sidebar .top .logo {
+  padding-left: 1em;
+}
+.sidebar .top .logo a {
+  display: flex;
+  align-items: center;
+  font-size: 1.5em;
+  font-weight: 700;
+}
+.sidebar .top .logo a button {
+  padding-left: 0.2em;
+}
+.sidebar .hideBtn {
+  background-color: rgb(227, 233, 236);
+}
+.sidebar .hideBtn:hover {
+  background-color: rgb(181, 190, 196);
+  color: white;
+}
+
+.sidebar-menu {
+  cursor: pointer;
+  padding-top: 0.7em;
+}
+.sidebar-menu a {
+  padding: 0.4em 1em;
+  font-size: 1em;
+  font-weight: 600;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.sidebar-menu a.board {
+  width: 100%;
+}
+.sidebar-menu a span {
+  padding-right: 0.6rem;
+}
+.sidebar-menu a div span {
+  padding-left: 0.7rem;
+}
+.sidebar-menu a:hover, .sidebar-menu .sidebar-btn:hover {
+  background-color: rgb(199, 209, 218);
+  color: white;
+}
+.sidebar-menu .dropdown-arrow {
+  padding: 0.3rem 0 0 0.2rem;
+  margin-left: 1rem;
+  font-size: 1.3em;
+  font-weight: 700;
+}
+.sidebar-menu .subCate {
+  display: flex;
+  flex-direction: column;
+}
+.sidebar-menu .subCate a {
+  align-items: center;
+}
+.sidebar-menu .subCate a div {
+  padding-left: 2em;
+}
+.sidebar-menu .add-new-btn {
+  text-align: justify;
+  padding: 0.6em 1.5em;
+  font-size: 14px;
+  color: rgb(71, 69, 69);
+}
+.sidebar-menu .add-new-btn div {
+  padding-left: 1rem;
+}
+.sidebar-menu .add-new-btn span {
+  padding-left: 1em;
+}
+
+.logo span {
+  padding-left: 0.6rem;
+}
+
+.sidebar-btn.clicked {
+  background-color: rgb(212, 221, 230);
+}
+.sidebar-btn.active {
+  background-color: rgb(212, 221, 230);
+}/*# sourceMappingURL=sidebar.css.map */

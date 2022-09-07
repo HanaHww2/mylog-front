@@ -1,8 +1,113 @@
 .App {
-  text-align: center;
+  position: relative;
+  display: flex;
+  flex: 1 1 0;
+  height: 100vh;
+  /* overflow: hidden;
+  background-color: transparent; */
+}
+.inline-block {
+  display: inline-block;
+}
+.main-section {
+  width: 100%;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+}
+.main-container {
+  margin:0.5rem 1rem;
+  max-width: 1200px;
+}
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+.align-end {
+  align-items: flex-end;
 }
 
-.App-logo {
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+.justify-end {
+  justify-content: flex-end;
+}
+.justify-center {
+  justify-content: center;
+}
+.space-between {
+  justify-content: space-between;
+}
+.space-around {
+  justify-content: space-around;
+}
+
+.text-center {
+  text-align: center;
+}
+.wrapper-nm {
+  margin: 1rem 0;
+}
+
+.mt-normal {
+  margin-top: 1em;
+}
+
+.mb-normal {
+  margin-bottom: 1em;
+}
+
+.ml-normal {
+  margin-left: 1em;
+}
+
+.mr-normal {
+  margin-right: 1em;
+}
+.hidden {
+  display: none;
+}
+.show {
+  display: block;
+}
+.cursor-p {
+  cursor: pointer;
+}
+
+input {
+  height: 35px;
+  padding: 0.3em 0.6em;
+  border-radius: 5px;
+  border: 1px solid #e1e2e3;
+  background-color: #fff;
+  font-size: 15px;
+  color: #333;
+}
+
+.input-title {
+  border: none;
+  border-right: 0px;
+  border-top: 0px;
+  border-left: 0px;
+  border-bottom: solid 1px rgb(130 133 135);
+  padding: 0.5em;
+  outline: none;
+  font-size: 1.5em;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.editor-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-section .bottom-container {
+    margin: 0 1rem;
+}
+/* .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
@@ -35,4 +140,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */

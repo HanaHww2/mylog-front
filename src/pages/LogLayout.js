@@ -1,22 +1,6 @@
-import './App.css';
-import './styles/common.css';
-
-import { useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
-
-import EditPage from './pages/post/EditPage';
-import MainPage from './pages/MainPage';
-import DetailPage from './pages/post/DetailPage';
-import JoinPage from './pages/user/JoinPage';
-import AboutPage from './pages/AboutPage';
-import ListPage from './pages/post/ListPage';
-
-import Signin from './components/auth/Signin';
-import Signup from './components/auth/Signup';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import SideBar from './components/sidebar/SideBar';
-import { checkIfAccessTokenIsValid } from './api/Api';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { checkIfAccessTokenIsValid } from '../api/Api';
 
 function App() {
   let [unsigned, setUnsigned] = useState(true); // default true!

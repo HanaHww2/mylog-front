@@ -1,21 +1,29 @@
 import React, { useRef, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { savePost } from '../../api/Api';
 import CategorySelector from '../../components/post/CategorySelector';
 import QuillEditor from '../../components/post/QuillEditor';
 import TagInput from '../../components/post/TagInput';
 
 const EditPage = () => {
+  const location = useLocation();
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const boardId = location.state?.boardId;
+  const categoryId = location.state?.categoryId;
+  //const [searchParams, setSearchParams] = useSearchParams();
 
   // 현재 리스트 페이지에서 보드, 카테고리 정보 필요함
   // edit 페이지로 넘어갈 때 정보 전달 필요
-  const params = {
-    type: searchParams.get('type'),
-    id: searchParams.get('id'),
+  // const params = {
+  //   type: searchParams.get('type'),
+  //   id: searchParams.get('id'),
+  // };
+  let editorContent = {
+    html: '',
+    imgFileArr: [],
+    boardId: boardId,
+    categoryId: categoryId,
   };
-  let editorContent = { html: '', imgFileArr: [] };
   let tempImgFileArr = [];
 
   // const boardRef = useRef();
@@ -55,9 +63,10 @@ const EditPage = () => {
     return filtered;
   };
 
-  const categoryHandler = (boardId, categoryId) => {
+  const categoryHandler = (boardId, categoryId, boardName) => {
     if (boardId) editorContent.boardId = boardId;
     if (categoryId) editorContent.categoryId = categoryId;
+    if (boardName) editorContent.boardName = boardName;
   };
 
   const handleSubmit = async (e) => {
@@ -82,8 +91,8 @@ const EditPage = () => {
 
     try {
       const res = await savePost(postBody);
-      console.log(res.message);
-      navigate(`/${res.data.title}`, {
+      console.log(res);
+      navigate(`/${editorContent.boardName}/${res.data.title}`, {
         ///${boardName}/${categoryName}
         replace: true,
         state: { ...res.data },
@@ -96,7 +105,11 @@ const EditPage = () => {
   return (
     <div className="editor-section">
       <form onSubmit={handleSubmit}>
-        <CategorySelector categoryHandler={categoryHandler} />
+        <CategorySelector
+          categoryHandler={categoryHandler}
+          boardId={boardId}
+          categoryId={categoryId}
+        />
         <div>
           <input
             type="text"

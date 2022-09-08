@@ -1,55 +1,51 @@
 import { data } from 'autoprefixer';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import {
+  getMainPostList,
+  getPostListBy,
+  getPostListForMain,
+} from '../../api/Api';
 import Pagenation from '../../components/post/Pagenation';
 import PostItem from '../../components/post/PostItem';
 import PostData from '../../mock-data/PostData';
 
 const ListPage = () => {
   //const mockPost = PostData;
-  const [logs, setLogs] = useState([]);
   const location = useLocation();
-  console.log(location);
+  const [logs, setLogs] = useState([]);
 
   const uriArr = location.pathname.split('/');
+  const searchParams = { firstUri: uriArr[1], secondUri: uriArr[2] };
   const boardInfo = { boardName: uriArr[1], cateName: uriArr[2] };
-
-  const contentHandler = (content) => {
-    const dom = document.createElement('div');
-    dom.innerHTML = content;
-    const text = dom.innerText;
-    return text;
+  const getPostList = async (searchParams) => {
+    const logs = await getPostListBy(searchParams);
+    setLogs(logs);
+  };
+  const getMainPostList = async () => {
+    const logs = await getPostListForMain();
+    setLogs(logs);
   };
 
   useEffect(() => {
-    console.log('hi');
-    fetch('http://localhost:8080/api/v1/posts') // 보드별, 카테고리별 조회 필요
-      .then((res) => res.json())
-      .then((json) => {
-        const result = json.data;
-        const logs = result.map((item) => {
-          item.plainContent = contentHandler(item.content);
-          return item;
-        });
-        console.log(logs);
-        setLogs(logs);
-      });
-  }, []);
+    if (location.pathname === '/') return getMainPostList();
+    if (location.state) {
+      searchParams.boardId = location.state?.boardId;
+      searchParams.categoryId = location.state?.categoryId;
+    }
+    getPostList(searchParams);
+  }, [location]);
 
   return (
     <div className="main-container">
-      <div className="flex-row justify-end">
-        <Link to="/edit" state={boardInfo}>
-          <button>Add New</button>
-        </Link>
-      </div>
       <h2 className="flex-row justify-center mb-normal">
-        {boardInfo.boardName} / {boardInfo.cateName}
+        {boardInfo.boardName}
+        {boardInfo.cateName ? ` / ${boardInfo.cateName}` : null}
       </h2>
       <div className="post-list-section">
-        {logs.map((log) => (
-          <PostItem key={log.id} log={log} boardName={boardInfo.boardName} />
-        ))}
+        {logs != []
+          ? logs.map((log) => <PostItem key={log.id} log={log} />)
+          : () => <p>게시물이 없습니다.</p>}
         <Pagenation />
       </div>
     </div>

@@ -1,5 +1,7 @@
+import { logRoles } from '@testing-library/react';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { getDataInSessionStorage } from '../../api/Api';
 import Comment from '../../components/post/Comment';
 import PostDetail from '../../components/post/PostDetail';
 
@@ -7,8 +9,14 @@ const DetailPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   //const [searchParams, setSearchParams] = useSearchParams();
-  const postId = location.state?.id;
-  const [log, setLog] = useState({});
+  //const postId = location.state?.id;
+  const data = location.state?.log;
+  const boardName = data.boardName;
+  const [log, setLog] = useState(data);
+
+  const checkBoardName = () => {
+    getDataInSessionStorage('boardList');
+  };
 
   const contentHandler = (content) => {
     const dom = document.createElement('div');
@@ -16,16 +24,16 @@ const DetailPage = () => {
   };
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/v1/posts/' + postId)
-      .then((res) => res.json())
-      .then((json) => {
-        console.log(json);
-        const result = json.data;
-        const log = { ...result }; //, content: contentHandler(result.content) };
-
-        setLog({ ...log });
-        //setLogs(json.data);
-      });
+    // fetch('http://localhost:8080/api/v1/posts/' + postId)
+    //   .then((res) => res.json())
+    //   .then((json) => {
+    //     console.log(json);
+    //     const result = json.data;
+    //     const log = { ...result }; //, content: contentHandler(result.content) };
+    //     setLog({ ...log });
+    //     //setLogs(json.data);
+    //   });
+    // setLog({ ...data });
     //setLogs(mockPost);
   }, []);
 
@@ -34,11 +42,11 @@ const DetailPage = () => {
       <div className="mb-normal">
         <h1>{log.title}</h1>
         <div className="sm-info mt-normal">
-          <span>Author: {log.authorName}</span>
+          <span>Author {log.authorName}</span>
+          <span>lastModified </span>
           <span>
-            lastModified:{' '}
             {log.modifiedDate
-              ? log.modifiedDate.replace('T', ' ').substring(0, 19)
+              ? log.modifiedDate.replace('T', ' ').substring(0, 16)
               : null}
           </span>
         </div>

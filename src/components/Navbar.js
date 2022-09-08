@@ -1,10 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa';
 import '../styles//components.css';
 import Timer from './timer/Timer';
+import { useEffect } from 'react';
+import EditLinkBtn from './post/EditLinkBtn';
 
-const Header = (props) => {
+const Navbar = (props) => {
+  useEffect(() => {
+    console.log(props);
+  }, [props.unsigned]);
   return (
     <header className="nav-bar">
       <button
@@ -32,6 +37,11 @@ const Header = (props) => {
             UserInfo
           </button>
         </li>
+        {props.unsigned ? null : (
+          <li className="menu">
+            <EditLinkBtn />
+          </li>
+        )}
         <li className="menu">
           <button>⏰</button>
           <Timer />
@@ -41,4 +51,4 @@ const Header = (props) => {
   );
 };
 
-export default Header;
+export default Navbar;

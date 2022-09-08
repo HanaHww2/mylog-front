@@ -19,10 +19,14 @@ const Signin = (props) => {
       props.setUnsigned(false);
     } else {
       // TODO 수정 필요, Alert ''모달''을 이용해 오류 메세지를 보여준다.
+      // 근데 인프런도 이렇게 하네 ㅎ,ㅎ
       alert(result.message);
     }
   };
-
+  const modalChangeHandler = () => {
+    props.signinModalHandler();
+    props.signupModalHandler();
+  };
   useEffect(() => {
     console.log('login-modal-rendered');
     emailInput.current.value = '';
@@ -32,8 +36,8 @@ const Signin = (props) => {
   }, [props.visible]);
 
   return (
-    <div className={`center-modal ${props.visible ? 'hidden' : 'show'}`}>
-      <div className="modal-content">
+    <div className={`center-modal ${props.visible ? 'show' : 'hidden'}`}>
+      <div className="modal-content singin">
         <div className="flex-row justify-end">
           <h4 className="modal-logo">🚀 MyLog</h4>
           <button className="" onClick={props.signinModalHandler}>
@@ -46,20 +50,20 @@ const Signin = (props) => {
             type="email"
             placeholder="이메일을 입력해주세요"
             ref={emailInput}
-            id=""
+            //id="login-email"
           />
           <input
             className="mb-normal"
             type="password"
             placeholder="비밀번호를 입력해주세요"
             ref={pwInput}
-            id=""
+            //id=""
           />
           <button onClick={singinBtnHandler}>로그인</button>
         </div>
         <div>
           <button>비밀번호 찾기</button>
-          <button>회원가입</button>
+          <button onClick={modalChangeHandler}>회원가입</button>
         </div>
         <div className="wrapper-nm">
           <hr className="pale-borderline" />

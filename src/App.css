@@ -44,6 +44,11 @@
   justify-content: space-around;
 }
 
+.fill-flex-parent {
+  flex:1;
+}
+
+
 .text-center {
   text-align: center;
 }
@@ -107,6 +112,8 @@ input {
 .editor-section .bottom-container {
     margin: 0 1rem;
 }
+
+
 /* .App-logo {
   height: 40vmin;
   pointer-events: none;

@@ -1,7 +1,8 @@
 .sidebar {
   width: 17em;
   background-color: rgb(227, 233, 236);
-  height: 100vh;
+  min-height: 100vh;
+  height: auto;
   flex-grow: 0;
   flex-shrink: 0;
   transition: box-shadow 300ms ease-in 0s;

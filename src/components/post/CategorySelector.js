@@ -4,43 +4,58 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useRef } from 'react';
 
-const CategorySelector = ({ categoryHandler }) => {
+const CategorySelector = ({ categoryHandler, boardId, categoryId }) => {
   const boardRef = useRef();
   const categoryRef = useRef();
   const [categories, setCategoires] = useState([]);
   const boardList = JSON.parse(window.sessionStorage.getItem('boardList'));
 
-  const getCategories = (boardId) => {
-    let categoryId;
+  const getBoradNameAndCategories = (boardId) => {
+    const temp = {};
     if (boardList) {
       const board = boardList.find((item) => item.id == boardId);
       setCategoires(board.categories);
-      categoryId = board.categories[0].id;
+      temp.categoryId = board.categories[0]?.id;
+      temp.boardName = board.boardName;
     }
-    return categoryId;
+    return temp;
+  };
+
+  const getBoardName = (e) => {
+    const idx = e.target.selectedIndex;
+    const boardName = e.target[idx].text;
+    return boardName;
   };
   const onChangeBoardId = (e) => {
     const boardId = e.target.value;
-    const categoryId = getCategories(boardId);
+    const { categoryId, boardName } = getBoradNameAndCategories(boardId);
 
-    categoryHandler(boardId, categoryId);
+    categoryHandler(boardId, categoryId, boardName);
   };
   const onChangeCategoryId = (e) => {
     const boardId = boardRef.current.value;
     const categoryId = e.target.value;
-    categoryHandler(boardId, categoryId);
+    const boardName = getBoardName(e);
+
+    categoryHandler(boardId, categoryId, boardName);
   };
 
   useEffect(() => {
     const boardId = boardRef.current.value;
-    const categoryId = getCategories(boardId);
+    const { categoryId, boardName } = getBoradNameAndCategories(boardId);
     console.log(boardId, categoryId);
-    categoryHandler(boardId, categoryId);
+
+    categoryHandler(boardId, categoryId, boardName);
   }, []);
+
   return (
     <div className="flex-row mb-normal">
       <div>
-        <select ref={boardRef} onChange={onChangeBoardId}>
+        <select
+          ref={boardRef}
+          defaultValue={boardId}
+          onChange={onChangeBoardId}
+        >
           {boardList
             ? boardList.map((item) => {
                 return <option value={item.id}>{item.name}</option>;
@@ -49,12 +64,18 @@ const CategorySelector = ({ categoryHandler }) => {
         </select>
       </div>
       <div>
-        <select ref={categoryRef} onChange={onChangeCategoryId}>
-          {categories
+        <select
+          ref={categoryRef}
+          defaultValue={categoryId ? categoryId : 0}
+          onChange={onChangeCategoryId}
+        >
+          {categories != []
             ? categories.map((item) => {
                 return <option value={item.id}>{item.name}</option>;
               })
-            : `<option value>카테고리 없음</option>`}
+            : () => {
+                return `<option value>카테고리 없음</option>`;
+              }}
         </select>
       </div>
     </div>

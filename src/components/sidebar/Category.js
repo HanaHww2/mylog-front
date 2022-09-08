@@ -1,26 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// categories.map((item, index) => {
-//   return (
-//     <Category
-//       item={item}
-//       index={index}
-//       visible={subCateVis}
-//       isActive={isActive}
-//     />
-//   );
-// });
-// 각 서브카테 탭 요소
-const Category = ({ categories, visible, isActive }) => {
+const Category = ({ categories, visible, isActive, boardId }) => {
   return (
     <div>
       {categories.map((item, index) => {
         return (
           <Link
             to={item.uri + '/list'}
+            state={{ boardId: boardId, categoryId: item.id }}
             className={`sidebar-btn ${
-              visible && isActive(item.uri) ? 'active' : ''
+              visible && isActive(0, item.id) ? 'active' : ''
             }`}
           >
             <div>

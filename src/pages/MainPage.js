@@ -23,13 +23,13 @@ const MainPage = () => {
   return (
     <div>
       <div className="main-container">
-        <div>
+        <div className="text-center">
           <h1>Hello, there!</h1>
-          <section>
+          <div className="mt-small mb-small">
             안녕하세요! 여기는 myLog 입니다!😁 <br />
             아직 부족한 점이 많지만, 지속적으로 기능을 추가하고 리팩토링을
             수행하며 저만의 놀이터로 가꿔나갈 예정입니다!
-          </section>
+          </div>
         </div>
         <div className="post-list-section text-center">
           <h3>인기 게시글</h3>

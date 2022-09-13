@@ -86,7 +86,7 @@ const SideBar = (props) => {
     if (!curBoardId) curBoardId = location.state?.log.boardId;
 
     checkBoard(curBoardId);
-  }, [location]);
+  }, [location, props.unsigned]);
 
   return (
     <div

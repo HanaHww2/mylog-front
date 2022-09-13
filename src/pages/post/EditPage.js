@@ -18,13 +18,14 @@ const EditPage = () => {
   //   type: searchParams.get('type'),
   //   id: searchParams.get('id'),
   // };
-  let editorContent = {
+  const editorContent = {
     html: '',
     imgFileArr: [],
     boardId: boardId,
     categoryId: categoryId,
   };
-  let tempImgFileArr = [];
+
+  const tempImgFileArr = [];
 
   // const boardRef = useRef();
   // const categoryRef = useRef();
@@ -127,9 +128,7 @@ const EditPage = () => {
         </div>
         <div>
           <QuillEditor
-            // editorContent={editorContent}
             editorContentHandler={editorContentHandler}
-            // tempImgFileArr={tempImgFileArr}
             tempImgFileArrHandeler={tempImgFileArrHandeler}
           />
         </div>

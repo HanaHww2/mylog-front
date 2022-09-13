@@ -31,6 +31,13 @@
   padding-left: 0.5rem;
 }
 
+.signup-info {
+  text-align: left;
+  font-size: 0.8rem;
+  padding-left: 0.2em;
+  color: rgb(205, 92, 92);
+}
+
 .logItem-body {
   padding: 0.5rem;
   height: 2rem;

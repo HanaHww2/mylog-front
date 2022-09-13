@@ -1,7 +1,7 @@
 import { logRoles } from '@testing-library/react';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { getDataInSessionStorage } from '../../api/Api';
+import { getData, getDataInSessionStorage, patchData } from '../../api/Api';
 import Comment from '../../components/post/Comment';
 import PostDetail from '../../components/post/PostDetail';
 
@@ -11,6 +11,8 @@ const DetailPage = () => {
   //const [searchParams, setSearchParams] = useSearchParams();
   //const postId = location.state?.id;
   const data = location.state?.log;
+
+  console.log(data);
   const boardName = data.boardName;
   const [log, setLog] = useState(data);
 
@@ -18,23 +20,14 @@ const DetailPage = () => {
     getDataInSessionStorage('boardList');
   };
 
-  const contentHandler = (content) => {
-    const dom = document.createElement('div');
-    return dom;
+  const addPostReadingCount = async () => {
+    console.log(data);
+    const result = await getData(`/api/v1/posts/${data.id}/counting`);
+    console.log(result);
   };
-
   useEffect(() => {
-    // fetch('http://localhost:8080/api/v1/posts/' + postId)
-    //   .then((res) => res.json())
-    //   .then((json) => {
-    //     console.log(json);
-    //     const result = json.data;
-    //     const log = { ...result }; //, content: contentHandler(result.content) };
-    //     setLog({ ...log });
-    //     //setLogs(json.data);
-    //   });
-    // setLog({ ...data });
-    //setLogs(mockPost);
+    const result = addPostReadingCount();
+    console.log(result);
   }, []);
 
   return (

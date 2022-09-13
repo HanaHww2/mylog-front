@@ -55,7 +55,7 @@ export const sendSigninReq = async (postBody) => {
     body: JSON.stringify(postBody),
   });
   const json = await res.json();
-  console.log(json);
+
   headers = { ...headers, Authorization: json.data.authorization };
   const result = { ...json, status: res.status };
   saveDataInSessionStorage('auth-token', result.data.authorization);
@@ -73,6 +73,33 @@ export const sendSignupReq = async (postBody) => {
   const json = await res.json();
   const result = { ...json, status: res.status };
 
+  return result;
+};
+
+export const checkIfDuplicatedEmail = async (email) => {
+  console.log(email);
+  const res = await fetch(DEFAULT_URL + '/api/v1/auth/duplicatedEmail', {
+    method: 'POST',
+    headers: { ...headers },
+    body: JSON.stringify({ email: email }),
+  });
+
+  const json = await res.json();
+  const result = { ...json, status: res.status };
+  console.log(res, result);
+  return result;
+};
+
+export const checkIfDuplicatedName = async (name) => {
+  const res = await fetch(DEFAULT_URL + '/api/v1/auth/duplicatedName', {
+    method: 'POST',
+    headers: { ...headers },
+    body: JSON.stringify({ name: name }),
+  });
+
+  const json = await res.json();
+  const result = { ...json, status: res.status };
+  console.log(res, result);
   return result;
 };
 
@@ -182,6 +209,7 @@ export const getPostListBy = async (searchParams) => {
   }); // 보드별, 카테고리별 조회 필요
   const json = await res.json();
 
+  if (!json.data) return [];
   const result = json.data.map((item) => {
     item.plainContent = contentHandler(item.content);
     return item;
@@ -206,5 +234,86 @@ export const getPostListForMain = async () => {
     return item;
   });
   console.log(result);
+  return result;
+};
+
+// fetch('http://localhost:8080/api/v1/posts/' + postId)
+//   .then((res) => res.json())
+//   .then((json) => {
+//     console.log(json);
+//     const result = json.data;
+//     const log = { ...result }; //, content: contentHandler(result.content) };
+//     setLog({ ...log });
+//     //setLogs(json.data);
+//   });
+// setLog({ ...data });
+//setLogs(mockPost);
+
+// common GET METHOD API CALL
+export const getData = async (uri, searchParams) => {
+  console.log(searchParams);
+
+  let paramString = '';
+  if (searchParams) {
+    paramString += '?';
+
+    paramString += Object.keys(searchParams)
+      .map(
+        (k) =>
+          `${encodeURIComponent(k)}=${encodeURIComponent(searchParams[k])}`,
+      )
+      .join('&');
+  }
+
+  const url = DEFAULT_URL + uri + paramString;
+  console.log(url);
+
+  const res = await fetch(url, {
+    method: 'GET',
+    headers: {
+      ...headers,
+    },
+  });
+  // 보드별, 카테고리별 조회 필요
+  const json = await res.json();
+
+  if (!json.data) return [];
+
+  const result = { ...json, status: res.status };
+  console.log(result);
+
+  return result;
+};
+
+export const postData = async (uri, reqBody) => {
+  const url = DEFAULT_URL + uri;
+  const res = await fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(reqBody),
+    headers: {
+      ...headers,
+    },
+  });
+  console.log(res);
+
+  const json = await res.json();
+  const result = { ...json, status: res.status };
+  return result;
+  //return promise.then((res) => res.json());
+};
+
+export const patchData = async (uri, reqBody) => {
+  const url = DEFAULT_URL + uri;
+  const res = await fetch(url, {
+    method: 'PATCH',
+    body: JSON.stringify(reqBody),
+    headers: {
+      ...headers,
+    },
+  });
+  console.log(res);
+
+  const json = await res.json();
+  const result = { ...json, status: res.status };
   return result;
 };

@@ -32,10 +32,10 @@ const PostItem = ({ log }) => {
           width="150px"
         />
       </div>
-      <div className="ml-normal fill-flex-parent">
+      <div className="ml-normal fill-flex-parent text-left">
         <div className="logItem-header">
           <h2>{title}</h2>
-          <div className="sm-info mt-normal">
+          <div className="sm-info mt-small">
             <span>Author</span>
             <span>{authorName}</span>
             <span>lastModified </span>

@@ -19,7 +19,7 @@ const Signin = (props) => {
       props.setUnsigned(false);
     } else {
       // TODO 수정 필요, Alert ''모달''을 이용해 오류 메세지를 보여준다.
-      // 근데 인프런도 이렇게 하네 ㅎ,ㅎ
+      // 근데 인프런도 Alert 쓰네 ㅎ,ㅎ
       alert(result.message);
     }
   };

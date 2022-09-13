@@ -1,24 +1,82 @@
 import React from 'react';
 import { useEffect } from 'react';
+import { useState } from 'react';
 import { useRef } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { sendSignupReq } from '../../api/Api';
+import {
+  checkIfDuplicatedEmail,
+  checkIfDuplicatedName,
+  sendSignupReq,
+} from '../../api/Api';
+import SignupEmailInput from './SignupEmailInput';
+import SignupNameInput from './SignupNameInput';
+import SignupNicknameInput from './SignupNicknameInput';
+import SignupPasswordInput from './SignupPasswordInput';
 
 const Signup = (props) => {
   const emailInput = useRef();
   const pwInput = useRef();
   const nameInput = useRef();
-  const uriInput = useRef();
+  const nicknameInput = useRef();
   const navigate = useNavigate();
 
+  const avilableInput = {
+    email: false,
+    name: false,
+    password: false,
+    nickname: true,
+  };
+
+  const verifyAvailableInput = ({
+    email = avilableInput.email,
+    name = avilableInput.name,
+    password = avilableInput.password,
+    nickname = avilableInput.nickname,
+  }) => {
+    avilableInput.email = email;
+    avilableInput.name = name;
+    avilableInput.password = password;
+    avilableInput.nickname = nickname;
+  };
+
+  const validateInput = (postBody) => {
+    console.log(avilableInput);
+
+    if (!avilableInput.email) {
+      alert('이메일을 다시 확인해주세요.');
+      return false;
+    }
+    if (!avilableInput.name) {
+      alert('명칭을 다시 확인해주세요.');
+      return false;
+    }
+    if (!avilableInput.password) {
+      alert('비밀번호를 다시 확인해주세요.');
+      return false;
+    }
+    if (!avilableInput.nickname) {
+      alert('별명을 다시 확인해주세요.');
+      return false;
+    }
+    return true;
+  };
   const singupBtnHandler = async () => {
     const postBody = {
       email: emailInput.current.value,
       password: pwInput.current.value,
+      name: nameInput.current.value,
+      nickname: nicknameInput.current.value
+        ? nicknameInput.current.value
+        : nameInput.current.value,
     };
-    const result = await sendSignupReq(postBody);
 
-    if (result.status === 200) {
+    console.log(postBody);
+    if (!validateInput(postBody)) return;
+
+    const result = await sendSignupReq(postBody);
+    console.log(result);
+
+    if (result.status == 201 || result.status == 200) {
       //setSidebarVis(data);
       alert('회원가입이 완료되었습니다. 로그인 후 이용해주세요.');
       modalChangeHandler();
@@ -35,10 +93,12 @@ const Signup = (props) => {
   };
 
   useEffect(() => {
-    console.log(props.visible);
     console.log('signup-modal-rendered');
-    emailInput.current.value = '';
-    pwInput.current.value = '';
+
+    // emailInput.current.value = '';
+    // pwInput.current.value = '';
+    // nameInput.current.value = '';
+    // nicknameInput.current.value = '';
 
     emailInput.current.focus();
   }, [props.visible]);
@@ -53,30 +113,24 @@ const Signup = (props) => {
           </button>
         </div>
         <div className="flex-col wrapper-nm">
-          <input
-            className="mb-normal"
-            type="email"
-            placeholder="이메일을 입력해주세요."
-            ref={emailInput}
+          <SignupEmailInput
+            emailInput={emailInput}
+            verifyAvailableInput={verifyAvailableInput}
           />
-          <input
-            className="mb-normal"
-            type="password"
-            placeholder="비밀번호를 입력해주세요."
-            ref={pwInput}
+          <SignupPasswordInput
+            pwInput={pwInput}
+            verifyAvailableInput={verifyAvailableInput}
           />
-          <input
-            className="mb-normal"
-            type="text"
-            placeholder="고유한 사용자명을 입력해주세요."
-            ref={uriInput}
+
+          <SignupNameInput
+            nameInput={nameInput}
+            verifyAvailableInput={verifyAvailableInput}
           />
-          <input
-            className="mb-normal"
-            type="text"
-            placeholder="사용할 이름(별명)을 입력해주세요."
-            ref={nameInput}
+          <SignupNicknameInput
+            nicknameInput={nicknameInput}
+            verifyAvailableInput={verifyAvailableInput}
           />
+
           <button onClick={singupBtnHandler}>회원가입</button>
         </div>
         <div>

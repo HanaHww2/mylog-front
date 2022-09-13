@@ -52,6 +52,10 @@
 .text-center {
   text-align: center;
 }
+.text-left {
+  text-align: left;
+  padding-left: 1rem;
+}
 .wrapper-nm {
   margin: 1rem 0;
 }
@@ -63,7 +67,13 @@
 .mb-normal {
   margin-bottom: 1em;
 }
+.mb-small {
+  margin-bottom: .5em;
 
+}
+.mt-small {
+  margin-top: .5em;
+}
 .ml-normal {
   margin-left: 1em;
 }

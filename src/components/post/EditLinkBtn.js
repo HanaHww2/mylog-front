@@ -13,7 +13,7 @@ const EditLinkBtn = () => {
     pathId.boardId = location.state?.boardId;
     pathId.categoryId = location.state?.categoryId;
 
-    if (!boardList.find((item) => item.id === pathId.boardId)) {
+    if (!boardList || !boardList.find((item) => item.id === pathId.boardId)) {
       pathId.boardId = 0;
       pathId.categoryId = 0;
     }

@@ -1,6 +1,6 @@
 import React, { useMemo, useRef, useState } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
-import 'react-quill/dist/quill.snow.custom.css';
+import 'react-quill/dist/quill.snow.css';
 import { uploadImage } from '../../api/Api';
 import ImageBlot from './ImageBlot';
 

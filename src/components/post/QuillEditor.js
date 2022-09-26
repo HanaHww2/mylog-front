@@ -50,7 +50,8 @@ const QuillEditor = (props) => {
         quillEditor.insertEmbed(
           range.index,
           'image',
-          'http://localhost:8080/images/' + item.filename,
+          item.url,
+          //'http://localhost:8080/images/' + item.filename,
           // 'imageBlot',
           // {
           //   src: 'http://localhost:8080/images/' + item.filename,

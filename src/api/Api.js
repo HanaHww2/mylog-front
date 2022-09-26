@@ -13,7 +13,15 @@ const delDataInSessionStorage = (key) => {
   window.sessionStorage.removeItem(key);
 };
 export const getDataInSessionStorage = (key) => {
-  return JSON.parse(window.sessionStorage.getItem(key));
+  let result;
+  try {
+    const data = window.sessionStorage.getItem(key);
+    result = JSON.parse(data);
+  } catch (e) {
+    console.log(e);
+    result = null;
+  }
+  return result;
 };
 
 // accesstoken 유효성 검증하여 로그인 상태 및 사용자 정보 확인

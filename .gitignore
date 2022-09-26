@@ -25,3 +25,12 @@ yarn-error.log*
 # scss
 *.scss
 *.css.map
+
+# docker
+docker*
+Dockerfile.*
+!docker-compose-prod.yml
+!Dockerfile.prod
+
+# nginx
+default-*.conf

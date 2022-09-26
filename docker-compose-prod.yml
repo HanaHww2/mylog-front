@@ -1,10 +1,21 @@
 version: "3"
 services:
-  mylog-front:
-    build:
-      context: .
-      dockerfile: Dockerfile.prod
-      args:
-        - REACT_APP_NAME=mylog
+  mylog-f:
+    container_name: mylog-f
+    image: mylog:0.0.1-f
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile.prod
+    # volumes:
+    #   - ./conf/:/etc/nginx/conf.d
     ports:
-      - "8080:80"
+      - 80:80
+      - 443:443
+    restart: always
+    # depends_on:
+    #   - api-server
+networks:
+  default:
+    external:
+      name: mylog
+

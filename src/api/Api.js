@@ -1,6 +1,9 @@
 import axios from 'axios';
 // 공통 변수 설정
-const DEFAULT_URL = 'http://localhost:8080';
+// 추후 dns에 동록된 주소 등으로 변경
+//const BACK_SERVICE_NAME = 'mylog-b';
+//프론트를 배포하는 nginx를 프록시 서버로 동시에 사용하고 있으므로
+const DEFAULT_URL = `http://localhost`;
 let headers = {
   'Content-Type': 'application/json',
 };
@@ -115,7 +118,7 @@ export const checkIfDuplicatedName = async (name) => {
 export const uploadImage = async (formData) => {
   console.log(headers);
   const res = await axios.post(
-    'http://localhost:8080/api/local/uploadImage',
+    DEFAULT_URL + '/api/local/uploadImage',
     formData,
     {
       headers: {
